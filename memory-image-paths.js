@@ -3,12 +3,16 @@
 if (typeof memoryPieces !== "undefined") {
   memoryPieces.forEach((piece) => {
     if (!piece.image) {
-      piece.image = `assets/memory-pieces/${piece.id}.jpg`;
+      if (piece.id === "summer-nights-full-dream") {
+        piece.image = "assets/memory-pieces/suikawari-bring-it.jpg";
+      } else if (piece.id === "suikawari-bring-it") {
+        piece.image = "assets/memory-pieces/summer-nights-full-dream.jpg";
+      } else {
+        piece.image = `assets/memory-pieces/${piece.id}.jpg`;
+      }
     }
   });
 
-  // memory-pieces.js renders once before this mapping script runs.
-  // Render again so the newly assigned image paths appear on the cards.
   if (typeof renderMemoryPieces === "function" && document.getElementById("memoryGrid")) {
     renderMemoryPieces();
   }
