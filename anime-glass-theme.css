@@ -14,6 +14,7 @@ body{
   background-position:center top !important;
   background-repeat:no-repeat !important;
   background-attachment:fixed !important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
 }
 
 body:before{
@@ -24,9 +25,9 @@ body:before{
   pointer-events:none;
   background:linear-gradient(180deg,rgba(5,4,10,.08),rgba(5,4,10,.38) 52%,rgba(5,4,10,.72));
 }
-
 body:after{display:none !important;}
 
+/* shared glass */
 .topbar,
 .database-toolbar,
 .results-bar,
@@ -45,109 +46,116 @@ body:after{display:none !important;}
 .memory-effect-card,
 .memory-break-card,
 .memory-stats-card,
-.large-portrait{
+.large-portrait,
+.tab-shell{
   background:
     linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.055) 38%,rgba(7,8,15,.28) 78%),
     var(--anime-glass) !important;
   border:1px solid var(--anime-line) !important;
-  box-shadow:
-    0 22px 60px rgba(0,0,0,.36),
-    inset 0 1px 0 rgba(255,255,255,.15),
-    0 0 28px rgba(194,135,255,.08) !important;
+  box-shadow:0 22px 60px rgba(0,0,0,.36),inset 0 1px 0 rgba(255,255,255,.15),0 0 28px rgba(194,135,255,.08) !important;
   backdrop-filter:blur(24px) saturate(138%) !important;
   -webkit-backdrop-filter:blur(24px) saturate(138%) !important;
 }
 
-.database-toolbar,
-.team-analysis,
-.memory-detail-card,
-.memory-effect-card,
-.memory-break-card,
-.memory-stats-card,
-.picker-modal,
-.large-portrait{
-  border-radius:22px !important;
-}
+.database-toolbar,.team-analysis,.memory-detail-card,.memory-effect-card,.memory-break-card,.memory-stats-card,.picker-modal,.large-portrait{border-radius:22px !important}
+.character-card,.memory-card,.team-slot,.analysis-card,.results-bar,.info-strip>div{border-radius:18px !important}
 
-.character-card,
-.memory-card,
-.team-slot,
-.analysis-card,
-.results-bar,
-.info-strip>div{
-  border-radius:18px !important;
-}
+/* improve page spacing */
+body>.wrap{padding-top:24px !important;padding-bottom:34px !important}
+.page-head{padding-top:26px !important;padding-bottom:26px !important}
+.formation-shell{padding-top:14px !important;margin-bottom:26px !important}
+.team-analysis{margin-top:18px !important;margin-bottom:28px !important;padding:24px !important}
+.detail-content{padding-top:18px !important}
+.detail-section{padding-top:46px !important;padding-bottom:46px !important}
+
+/* typography */
+.logo{font-family:Inter,ui-sans-serif,system-ui,sans-serif !important;font-weight:900 !important;letter-spacing:.015em !important}
+.topbar nav a{font-family:Inter,ui-sans-serif,system-ui,sans-serif !important;font-weight:750 !important;letter-spacing:.01em !important;font-size:.86rem !important}
+.page-head h1,.character-hero h1,.detail-section h2,.memory-detail-card h1{font-family:Inter,ui-sans-serif,system-ui,sans-serif !important;font-weight:900 !important;letter-spacing:-.045em !important}
+.eyebrow,.slot-label,.info-kicker{font-family:Inter,ui-sans-serif,system-ui,sans-serif !important;font-weight:850 !important;letter-spacing:.11em !important}
 
 @media(min-width:1101px){
   .topbar{
     background:linear-gradient(155deg,rgba(255,255,255,.13),rgba(9,9,18,.42)) !important;
     border-color:rgba(255,255,255,.28) !important;
   }
+  .topbar .logo{font-size:1rem !important}
+  .topbar nav{gap:10px !important}
+  .topbar nav a{padding:13px 14px !important;min-height:50px !important}
 }
 
-.topbar nav a:hover,
-.topbar nav a.active,
-.db-tab:hover,
-.db-tab.active,
-.outline-btn:hover{
+.topbar nav a:hover,.topbar nav a.active,.db-tab:hover,.db-tab.active,.outline-btn:hover{
   background:linear-gradient(110deg,rgba(104,194,255,.20),rgba(181,123,255,.19),rgba(255,151,215,.18)) !important;
   border-color:rgba(255,255,255,.31) !important;
   box-shadow:0 8px 26px rgba(0,0,0,.20),0 0 24px rgba(156,130,255,.13) !important;
 }
 
-.page-head h1,
-.character-hero h1{
+.page-head h1,.character-hero h1{
   background:linear-gradient(90deg,#fff 0%,#daf5ff 34%,#d8c7ff 64%,#ffc6eb 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+  -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 
-.portrait,
-.portrait.adventurer,
-.portrait.assist,
-.memory-art{
+.portrait,.portrait.adventurer,.portrait.assist,.memory-art{
   background:rgba(8,9,17,.20) !important;
   border-bottom-color:rgba(255,255,255,.13) !important;
 }
+.filter-grid select,.filter-grid input{background:rgba(8,9,16,.42) !important;border-color:rgba(255,255,255,.20) !important;backdrop-filter:blur(14px)}
+.results-bar{background:rgba(13,13,23,.28) !important}
 
-.filter-grid select,
-.filter-grid input{
-  background:rgba(8,9,16,.42) !important;
-  border-color:rgba(255,255,255,.20) !important;
-  backdrop-filter:blur(14px);
-}
-
-.results-bar{background:rgba(13,13,23,.28) !important;}
-
-.character-card:hover,
-.memory-card:hover,
-.team-slot:hover{
+.character-card:hover,.memory-card:hover,.team-slot:hover{
   transform:translateY(-5px);
   border-color:rgba(171,211,255,.46) !important;
-  box-shadow:
-    0 28px 70px rgba(0,0,0,.44),
-    0 0 30px rgba(160,127,255,.12),
-    inset 0 1px 0 rgba(255,255,255,.17) !important;
+  box-shadow:0 28px 70px rgba(0,0,0,.44),0 0 30px rgba(160,127,255,.12),inset 0 1px 0 rgba(255,255,255,.17) !important;
 }
+.character-hero{background:transparent !important}
 
-.character-hero{background:transparent !important;}
-
+/* sticky secondary navigation on character detail */
 .tab-shell{
-  background:rgba(8,8,14,.46) !important;
-  backdrop-filter:blur(20px) saturate(130%) !important;
-  -webkit-backdrop-filter:blur(20px) saturate(130%) !important;
+  position:sticky !important;
+  top:0 !important;
+  z-index:85 !important;
+  background:linear-gradient(180deg,rgba(18,14,32,.62),rgba(9,9,18,.46)) !important;
+  border-left:0 !important;
+  border-right:0 !important;
+  border-radius:0 !important;
+  box-shadow:0 12px 34px rgba(0,0,0,.22),inset 0 -1px 0 rgba(255,255,255,.06) !important;
+  padding:0 22px !important;
 }
+.tabs{min-height:66px !important;display:flex !important;align-items:center !important;gap:28px !important}
+.tabs a{font-size:.82rem !important;font-weight:800 !important;padding:22px 0 !important;position:relative !important}
+.tabs a:hover{color:#fff !important}
+.tabs a:after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:999px;background:linear-gradient(90deg,#76dcff,#c69aff,#f6a0dd);opacity:0;transform:scaleX(.35);transition:.2s}
+.tabs a:hover:after{opacity:1;transform:scaleX(1)}
 
-.wrap:after{
-  background:rgba(10,10,18,.28) !important;
-  border-color:rgba(255,255,255,.16) !important;
-  backdrop-filter:blur(18px) !important;
+/* team builder visual bug / breathing room */
+.formation-grid{padding:6px 0 2px !important}
+.team-slot{min-height:300px !important}
+.team-note{margin-top:14px !important}
+.analysis-grid{gap:14px !important}
+.analysis-card{padding:18px !important}
+
+/* memory detail should be glass too */
+#memoryDetail .memory-detail-card,
+#memoryDetail .memory-effect-card,
+#memoryDetail .memory-break-card,
+#memoryDetail .memory-stats-card{
+  background:linear-gradient(150deg,rgba(255,255,255,.13),rgba(255,255,255,.05) 34%,rgba(11,12,24,.34) 82%) !important;
+  border:1px solid rgba(255,255,255,.24) !important;
+  box-shadow:0 24px 64px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.16),0 0 26px rgba(160,127,255,.07) !important;
+  backdrop-filter:blur(26px) saturate(140%) !important;
+  -webkit-backdrop-filter:blur(26px) saturate(140%) !important;
 }
+#memoryDetail .stat-box,#memoryDetail .memory-stats span{background:rgba(8,9,17,.34) !important;border:1px solid rgba(255,255,255,.14) !important}
 
+.wrap:after{background:rgba(10,10,18,.28) !important;border-color:rgba(255,255,255,.16) !important;backdrop-filter:blur(18px) !important}
+
+@media(max-width:1100px){
+  .tab-shell{top:72px !important;border-radius:0 !important}
+}
 @media(max-width:760px){
-  body{
-    background-attachment:scroll !important;
-    background-position:center top !important;
-  }
+  body{background-attachment:scroll !important;background-position:center top !important}
+  body>.wrap{padding-top:10px !important}
+  .tab-shell{top:66px !important;padding:0 14px !important}
+  .tabs{gap:18px !important}
+  .tabs a{font-size:.76rem !important;padding:18px 0 !important}
 }
