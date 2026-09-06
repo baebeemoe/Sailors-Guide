@@ -65,6 +65,13 @@
 </main>
 
 <script src="memory-pieces.js"></script>
-<script src="memory-image-paths.js"></script>
+<script src="memory-image-paths.js?v=3"></script>
+<script>
+  // Force one final render after image paths have been assigned.
+  // This also avoids stale cached versions of the image mapping script on GitHub Pages.
+  if (typeof renderMemoryPieces === "function") {
+    renderMemoryPieces();
+  }
+</script>
 </body>
 </html>
