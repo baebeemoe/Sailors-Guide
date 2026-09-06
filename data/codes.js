@@ -1,5 +1,6 @@
 // Star Sailors redeem codes database.
-// expiration uses YYYY-MM-DD. Display times shown in source screenshots are UTC+7.
+// expiration uses YYYY-MM-DD when confirmed. Use null when the source does not specify an expiry.
+// Display times shown in source screenshots are UTC+7.
 // Duplicate screenshots are stored only once.
 const redeemCodes = [
   {
@@ -7,7 +8,7 @@ const redeemCodes = [
     code: "AFQKVCFX",
     reward: "Bulging Mushroom x3",
     start: "2026-07-15",
-    expiration: "2027-01-01",
+    expiration: null,
     source: "YouTube"
   },
   {
@@ -15,7 +16,7 @@ const redeemCodes = [
     code: "EWM6SMDU",
     reward: "Bulging Mushroom x3",
     start: "2026-07-16",
-    expiration: "2027-01-01",
+    expiration: null,
     source: "Discord"
   },
   {
@@ -23,7 +24,7 @@ const redeemCodes = [
     code: "NEWACUCH",
     reward: "Bulging Mushroom x3",
     start: "2026-07-18",
-    expiration: "2027-01-01",
+    expiration: null,
     source: "YouTube"
   },
   {
@@ -31,7 +32,7 @@ const redeemCodes = [
     code: "EWR3Q6ZE",
     reward: "Bulging Mushroom x3",
     start: "2026-07-28",
-    expiration: "2027-01-01",
+    expiration: null,
     source: "Discord"
   },
   {
@@ -39,7 +40,7 @@ const redeemCodes = [
     code: "PMEDMQCS",
     reward: "Bulging Mushroom x3",
     start: "2026-07-30",
-    expiration: "2027-01-01",
+    expiration: null,
     source: "Discord"
   },
   {
