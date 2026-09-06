@@ -1,0 +1,153 @@
+/* Beemoe's Guide — Anime Background + Glassmorphism Overlay */
+:root{
+  --anime-bg:url("assets/ui/yenpekar-lucy-theme.png");
+  --anime-glass:rgba(14,14,26,.34);
+  --anime-line:rgba(255,255,255,.24);
+}
+
+body{
+  background-color:#050508 !important;
+  background-image:
+    linear-gradient(rgba(5,4,10,.22),rgba(5,4,10,.62)),
+    var(--anime-bg) !important;
+  background-size:cover !important;
+  background-position:center top !important;
+  background-repeat:no-repeat !important;
+  background-attachment:fixed !important;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(180deg,rgba(5,4,10,.08),rgba(5,4,10,.38) 52%,rgba(5,4,10,.72));
+}
+
+body:after{display:none !important;}
+
+.topbar,
+.database-toolbar,
+.results-bar,
+.character-card,
+.memory-card,
+.team-analysis,
+.analysis-card,
+.team-slot,
+.picker-modal,
+.info-strip>div,
+.overview-panel,
+.gear-card,
+.placeholder-block,
+.showcase,
+.memory-detail-card,
+.memory-effect-card,
+.memory-break-card,
+.memory-stats-card,
+.large-portrait{
+  background:
+    linear-gradient(145deg,rgba(255,255,255,.14),rgba(255,255,255,.055) 38%,rgba(7,8,15,.28) 78%),
+    var(--anime-glass) !important;
+  border:1px solid var(--anime-line) !important;
+  box-shadow:
+    0 22px 60px rgba(0,0,0,.36),
+    inset 0 1px 0 rgba(255,255,255,.15),
+    0 0 28px rgba(194,135,255,.08) !important;
+  backdrop-filter:blur(24px) saturate(138%) !important;
+  -webkit-backdrop-filter:blur(24px) saturate(138%) !important;
+}
+
+.database-toolbar,
+.team-analysis,
+.memory-detail-card,
+.memory-effect-card,
+.memory-break-card,
+.memory-stats-card,
+.picker-modal,
+.large-portrait{
+  border-radius:22px !important;
+}
+
+.character-card,
+.memory-card,
+.team-slot,
+.analysis-card,
+.results-bar,
+.info-strip>div{
+  border-radius:18px !important;
+}
+
+@media(min-width:1101px){
+  .topbar{
+    background:linear-gradient(155deg,rgba(255,255,255,.13),rgba(9,9,18,.42)) !important;
+    border-color:rgba(255,255,255,.28) !important;
+  }
+}
+
+.topbar nav a:hover,
+.topbar nav a.active,
+.db-tab:hover,
+.db-tab.active,
+.outline-btn:hover{
+  background:linear-gradient(110deg,rgba(104,194,255,.20),rgba(181,123,255,.19),rgba(255,151,215,.18)) !important;
+  border-color:rgba(255,255,255,.31) !important;
+  box-shadow:0 8px 26px rgba(0,0,0,.20),0 0 24px rgba(156,130,255,.13) !important;
+}
+
+.page-head h1,
+.character-hero h1{
+  background:linear-gradient(90deg,#fff 0%,#daf5ff 34%,#d8c7ff 64%,#ffc6eb 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.portrait,
+.portrait.adventurer,
+.portrait.assist,
+.memory-art{
+  background:rgba(8,9,17,.20) !important;
+  border-bottom-color:rgba(255,255,255,.13) !important;
+}
+
+.filter-grid select,
+.filter-grid input{
+  background:rgba(8,9,16,.42) !important;
+  border-color:rgba(255,255,255,.20) !important;
+  backdrop-filter:blur(14px);
+}
+
+.results-bar{background:rgba(13,13,23,.28) !important;}
+
+.character-card:hover,
+.memory-card:hover,
+.team-slot:hover{
+  transform:translateY(-5px);
+  border-color:rgba(171,211,255,.46) !important;
+  box-shadow:
+    0 28px 70px rgba(0,0,0,.44),
+    0 0 30px rgba(160,127,255,.12),
+    inset 0 1px 0 rgba(255,255,255,.17) !important;
+}
+
+.character-hero{background:transparent !important;}
+
+.tab-shell{
+  background:rgba(8,8,14,.46) !important;
+  backdrop-filter:blur(20px) saturate(130%) !important;
+  -webkit-backdrop-filter:blur(20px) saturate(130%) !important;
+}
+
+.wrap:after{
+  background:rgba(10,10,18,.28) !important;
+  border-color:rgba(255,255,255,.16) !important;
+  backdrop-filter:blur(18px) !important;
+}
+
+@media(max-width:760px){
+  body{
+    background-attachment:scroll !important;
+    background-position:center top !important;
+  }
+}
