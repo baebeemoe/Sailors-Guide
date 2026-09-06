@@ -95,12 +95,57 @@ body:after{display:none !important;}
   box-shadow:0 8px 26px rgba(0,0,0,.20),0 0 24px rgba(156,130,255,.13) !important;
 }
 
+/* Readable hero area over bright artwork */
+.page-head{
+  position:relative !important;
+  isolation:isolate;
+  padding:34px 34px 38px !important;
+  margin-top:28px !important;
+  margin-bottom:24px !important;
+  border:1px solid rgba(255,255,255,.20);
+  border-radius:24px;
+  background:
+    linear-gradient(105deg,rgba(7,8,18,.78) 0%,rgba(9,10,24,.64) 46%,rgba(20,12,31,.36) 100%) !important;
+  box-shadow:0 24px 65px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.10);
+  backdrop-filter:blur(18px) saturate(125%);
+  -webkit-backdrop-filter:blur(18px) saturate(125%);
+  overflow:hidden;
+}
+.page-head:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:-1;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(0,0,0,.22),transparent 65%);
+}
+.page-head:before{
+  color:#cfeeff !important;
+  background:rgba(7,10,24,.46) !important;
+  border-color:rgba(210,233,255,.24) !important;
+  text-shadow:0 1px 10px rgba(0,0,0,.55);
+}
 .page-head h1,
 .character-hero h1{
-  background:linear-gradient(90deg,#fff 0%,#daf5ff 34%,#d8c7ff 64%,#ffc6eb 100%);
+  background:linear-gradient(90deg,#ffffff 0%,#e5f7ff 34%,#e8dcff 64%,#ffd8ef 100%);
   -webkit-background-clip:text;
   background-clip:text;
   color:transparent;
+}
+.page-head h1{
+  text-shadow:0 3px 30px rgba(0,0,0,.35);
+  filter:drop-shadow(0 2px 12px rgba(0,0,0,.40));
+}
+.page-head .eyebrow{
+  color:#73e3ff !important;
+  text-shadow:0 2px 12px rgba(0,0,0,.75),0 0 12px rgba(71,214,255,.28) !important;
+}
+.page-head>p:last-child,
+.page-head p:not(.eyebrow){
+  color:rgba(246,247,255,.88) !important;
+  text-shadow:0 2px 10px rgba(0,0,0,.72);
+  font-weight:500;
+  line-height:1.65;
 }
 
 .portrait,
@@ -147,15 +192,17 @@ body:after{display:none !important;}
 
 /* Visual bug fixes: readable typography + true glass on Memory Piece details */
 .topbar nav a{
-  color:rgba(250,249,255,.88) !important;
+  color:rgba(250,249,255,.92) !important;
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
   font-weight:700 !important;
   letter-spacing:.005em !important;
-  text-shadow:0 1px 10px rgba(0,0,0,.35);
+  text-shadow:0 1px 10px rgba(0,0,0,.55);
 }
 .topbar .logo{
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif !important;
   font-weight:900 !important;
+  color:#fff !important;
+  text-shadow:0 2px 12px rgba(0,0,0,.55);
 }
 
 .memory-detail-hero{
@@ -168,12 +215,12 @@ body:after{display:none !important;}
 .memory-info-panel,
 .memory-note-card{
   background:
-    linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.045) 34%,rgba(9,10,22,.28) 78%),
-    rgba(10,12,25,.42) !important;
-  border:1px solid rgba(255,255,255,.24) !important;
-  box-shadow:0 24px 60px rgba(0,0,0,.34),inset 0 1px 0 rgba(255,255,255,.14),0 0 28px rgba(171,128,255,.08) !important;
-  backdrop-filter:blur(26px) saturate(135%) !important;
-  -webkit-backdrop-filter:blur(26px) saturate(135%) !important;
+    linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.04) 34%,rgba(7,8,18,.38) 78%),
+    rgba(7,9,20,.58) !important;
+  border:1px solid rgba(255,255,255,.26) !important;
+  box-shadow:0 24px 60px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.14),0 0 28px rgba(171,128,255,.08) !important;
+  backdrop-filter:blur(28px) saturate(130%) !important;
+  -webkit-backdrop-filter:blur(28px) saturate(130%) !important;
 }
 .memory-info-panel{
   border-radius:24px !important;
@@ -185,14 +232,14 @@ body:after{display:none !important;}
 }
 .memory-banner h1{
   color:#fff !important;
-  text-shadow:0 2px 18px rgba(0,0,0,.34) !important;
+  text-shadow:0 2px 18px rgba(0,0,0,.52) !important;
 }
 .restriction-text,
 .memory-info-panel p,
 .memory-note-card p,
 .effect-block p,
 .max-growth-control small{
-  color:rgba(239,242,255,.78) !important;
+  color:rgba(244,246,255,.86) !important;
 }
 .memory-info-panel h3,
 .memory-note-card h2,
@@ -210,11 +257,11 @@ body:after{display:none !important;}
 .base-stat-panel>div,
 .effect-block,
 .max-growth-control{
-  background:rgba(6,9,20,.30) !important;
-  border:1px solid rgba(255,255,255,.16) !important;
+  background:rgba(4,7,17,.48) !important;
+  border:1px solid rgba(255,255,255,.18) !important;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.05) !important;
-  backdrop-filter:blur(14px) !important;
-  -webkit-backdrop-filter:blur(14px) !important;
+  backdrop-filter:blur(16px) !important;
+  -webkit-backdrop-filter:blur(16px) !important;
 }
 .base-stat-panel>div{border-radius:13px !important;}
 .max-growth-control{border-radius:15px !important;}
@@ -225,9 +272,9 @@ body:after{display:none !important;}
   padding:14px !important;
   margin:8px 0 !important;
 }
-.locked-effect{opacity:.72 !important;}
-.locked-effect h3{color:rgba(255,255,255,.72) !important;}
-.locked-effect p{color:rgba(229,232,246,.54) !important;}
+.locked-effect{opacity:.82 !important;}
+.locked-effect h3{color:rgba(255,255,255,.80) !important;}
+.locked-effect p{color:rgba(235,238,250,.68) !important;}
 
 .memory-notes{
   padding-top:24px !important;
@@ -244,6 +291,11 @@ body:after{display:none !important;}
   body{
     background-attachment:scroll !important;
     background-position:center top !important;
+  }
+  .page-head{
+    padding:24px 20px 28px !important;
+    margin-top:18px !important;
+    border-radius:18px;
   }
   .memory-detail-grid{gap:22px !important;}
   .memory-info-panel{padding:20px !important;}
