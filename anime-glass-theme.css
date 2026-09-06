@@ -190,6 +190,36 @@ body:after{display:none !important;}
   backdrop-filter:blur(18px) !important;
 }
 
+/* Team Builder spacing fix */
+.formation-shell{
+  margin:16px 0 24px !important;
+}
+.team-analysis{
+  padding:26px 26px 28px !important;
+  margin:0 0 28px !important;
+  min-height:0 !important;
+}
+.analysis-head{
+  margin-bottom:16px !important;
+  align-items:center !important;
+}
+.analysis-grid{
+  gap:12px !important;
+}
+.analysis-card{
+  padding:16px !important;
+  min-height:82px !important;
+}
+.team-note{
+  margin-top:12px !important;
+  margin-bottom:0 !important;
+  padding:15px 16px !important;
+}
+.team-analysis + .wrap:after,
+body>.wrap:after{
+  margin-top:0 !important;
+}
+
 /* Visual bug fixes: readable typography + true glass on Memory Piece details */
 .topbar nav a{
   color:rgba(250,249,255,.92) !important;
@@ -297,6 +327,7 @@ body:after{display:none !important;}
     margin-top:18px !important;
     border-radius:18px;
   }
+  .team-analysis{padding:20px !important;}
   .memory-detail-grid{gap:22px !important;}
   .memory-info-panel{padding:20px !important;}
 }
