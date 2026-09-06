@@ -1,23 +1,35 @@
 # Beemoe's Guide – Star Sailor's Edition
 
-## Recommended GitHub Pages structure
+A beginner-friendly Star Sailors companion guide hosted with GitHub Pages.
 
-Upload the CONTENTS of this ZIP directly to the root of your repository.
+## Project structure
 
+```text
 /
 ├── index.html
 ├── character.html
 ├── team-builder.html
 ├── memory-pieces.html
 ├── memory-piece.html
-├── styles.css
-├── data.js
-├── main.js
-├── character.js
-├── team-builder.js
-├── memory-pieces.js
-├── memory-piece.js
-├── .nojekyll
+├── README.md
+│
+├── css/
+│   ├── base.css
+│   ├── retro-theme.css
+│   ├── layout-fix.css
+│   └── anime-glass-theme.css
+│
+├── js/
+│   ├── main.js
+│   ├── character.js
+│   ├── team-builder.js
+│   ├── memory-piece.js
+│   └── memory-image-paths.js
+│
+├── data/
+│   ├── game-data.js
+│   └── memory-pieces.js
+│
 └── assets/
     ├── characters/
     ├── adventurers/
@@ -26,27 +38,32 @@ Upload the CONTENTS of this ZIP directly to the root of your repository.
     ├── artifacts/
     ├── monsters/
     └── ui/
+```
 
-## Important
+The HTML files remain in the repository root intentionally so the existing GitHub Pages URLs stay stable and simple. Styling, scripts, and databases are separated into dedicated folders for easier maintenance.
 
-Keep file names lowercase and use hyphens.
+## Naming rules
+
+Keep file names lowercase and use hyphens where possible.
 
 Examples:
 
+```text
 assets/characters/heidi.jpg
 assets/adventurers/paladin.jpg
 assets/memory-pieces/traitor.png
 assets/gear/example-gear.png
 assets/artifacts/example-artifact.png
+```
 
-GitHub Pages is case-sensitive.
+GitHub Pages paths are case-sensitive.
 
 ## GitHub Pages setup
 
-Settings -> Pages
-Source: Deploy from a branch
-Branch: main
-Folder: / (root)
+Settings → Pages
 
-Then hard refresh:
-Ctrl + Shift + R
+- Source: Deploy from a branch
+- Branch: `main`
+- Folder: `/ (root)`
+
+If a recently updated page still shows an older cached version, use Ctrl + F5 or Ctrl + Shift + R.
