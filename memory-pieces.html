@@ -6,36 +6,18 @@
   <title>Memory Pieces | Beemoe's Guide</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="retro-theme.css?v=3">
-  <link rel="stylesheet" href="layout-fix.css?v=1">
-  <link rel="stylesheet" href="anime-glass-theme.css?v=4">
+  <link rel="stylesheet" href="css/layout-fix.css?v=1">
+  <link rel="stylesheet" href="css/anime-glass-theme.css?v=1">
 </head>
 <body>
 <header class="topbar">
   <a class="logo" href="index.html"><span>✦</span> BEEMOE'S GUIDE</a>
   <button id="menuBtn" class="menu-btn" aria-label="Open menu">☰</button>
-  <nav id="navLinks">
-    <a href="index.html">Characters</a>
-    <a href="team-builder.html">Team Builder</a>
-    <a class="active" href="memory-pieces.html">Memory Pieces</a>
-    <a href="#">Gear</a>
-    <a href="#">Artifacts</a>
-  </nav>
+  <nav id="navLinks"><a href="index.html">Characters</a><a href="team-builder.html">Team Builder</a><a class="active" href="memory-pieces.html">Memory Pieces</a><a href="#">Gear</a><a href="#">Artifacts</a></nav>
 </header>
 <main class="wrap">
-  <section class="page-head">
-    <p class="eyebrow">STAMP BOOK DATABASE</p>
-    <h1>Memory Pieces</h1>
-    <p>Browse Memory Pieces and filter them by compatible Role. Select a Memory Piece to view base stats, effects, restrictions, and MAX Growth values.</p>
-  </section>
-  <section class="database-toolbar">
-    <div class="database-tabs" id="memoryRoleTabs">
-      <button class="db-tab active" data-role="all">All Roles</button><button class="db-tab" data-role="Attacker">Attacker</button><button class="db-tab" data-role="Defender">Defender</button><button class="db-tab" data-role="Debuffer">Debuffer</button><button class="db-tab" data-role="Supporter">Supporter</button>
-    </div>
-    <div class="filter-grid memory-filter-grid">
-      <label class="search-box"><span>Search</span><input id="memorySearch" type="search" placeholder="Search Memory Piece..."></label>
-      <label><span>Rarity</span><select id="rarityFilter"><option value="all">All Rarities</option><option value="SSR">SSR</option><option value="SR">SR</option><option value="R">R</option></select></label>
-    </div>
-  </section>
+  <section class="page-head"><p class="eyebrow">STAMP BOOK DATABASE</p><h1>Memory Pieces</h1><p>Browse Memory Pieces and filter them by compatible Role. Select a Memory Piece to view base stats, effects, restrictions, and MAX Growth values.</p></section>
+  <section class="database-toolbar"><div class="database-tabs" id="memoryRoleTabs"><button class="db-tab active" data-role="all">All Roles</button><button class="db-tab" data-role="Attacker">Attacker</button><button class="db-tab" data-role="Defender">Defender</button><button class="db-tab" data-role="Debuffer">Debuffer</button><button class="db-tab" data-role="Supporter">Supporter</button></div><div class="filter-grid memory-filter-grid"><label class="search-box"><span>Search</span><input id="memorySearch" type="search" placeholder="Search Memory Piece..."></label><label><span>Rarity</span><select id="rarityFilter"><option value="all">All Rarities</option><option value="SSR">SSR</option><option value="SR">SR</option><option value="R">R</option></select></label></div></section>
   <section><div class="results-bar"><p><strong id="memoryCount">0</strong> Memory Pieces found</p></div><div id="memoryGrid" class="memory-grid"></div></section>
 </main>
 <script src="memory-pieces.js"></script>
