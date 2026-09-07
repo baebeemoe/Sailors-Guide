@@ -1,116 +1,13 @@
-const slots = document.querySelectorAll(".team-slot");
-const backdrop = document.getElementById("pickerBackdrop");
-const pickerGrid = document.getElementById("pickerGrid");
-const pickerTitle = document.getElementById("pickerTitle");
-const closePicker = document.getElementById("closePicker");
-const clearTeam = document.getElementById("clearTeam");
-
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
-menuBtn.addEventListener("click", () => navLinks.classList.toggle("open"));
-
-let activeSlot = null;
-let team = { hero:null, battle1:null, battle2:null, assist1:null, assist2:null, monster:null };
-
-function choicesForSlot(slot) {
-  if (slot === "hero") return gameData.adventurers;
-  if (slot.startsWith("battle")) return gameData.characters.filter(x => x.type === "battle");
-  if (slot.startsWith("assist")) return gameData.characters.filter(x => x.type === "assist");
-  return gameData.monsters;
-}
-
-function slotTitle(slot) {
-  if (slot === "hero") return "Select Main Character";
-  if (slot.startsWith("battle")) return "Select Battle Partner";
-  if (slot.startsWith("assist")) return "Select Assist Partner";
-  return "Select Monster";
-}
-
-function openPicker(slot) {
-  activeSlot = slot;
-  pickerTitle.textContent = slotTitle(slot);
-  const choices = choicesForSlot(slot);
-
-  pickerGrid.innerHTML = choices.map(item => `
-    <button class="picker-card" data-id="${item.id}">
-      <div class="picker-icon">${item.image ? `<img src="${item.image}" alt="${item.name}">` : (item.icon || "✦")}</div>
-      <div>
-        <strong>${item.name}</strong>
-        <small>${item.type === "adventurer" ? "Adventurer Class" : item.partnerType || item.role}</small>
-        <div class="picker-tags"><span>${item.element}</span><span>${item.role}</span><span>${item.timeTrait}</span></div>
-      </div>
-    </button>
-  `).join("");
-
-  pickerGrid.querySelectorAll(".picker-card").forEach(card => {
-    card.addEventListener("click", () => {
-      const selected = choices.find(x => x.id === card.dataset.id);
-      team[activeSlot] = selected;
-      updateSlot(activeSlot, selected);
-      closeModal();
-      updateAnalysis();
-    });
-  });
-
-  backdrop.hidden = false;
-  document.body.classList.add("modal-open");
-}
-
-function closeModal() {
-  backdrop.hidden = true;
-  document.body.classList.remove("modal-open");
-}
-
-function updateSlot(slot, item) {
-  const el = document.querySelector(`[data-slot="${slot}"]`);
-  el.classList.add("filled");
-  el.innerHTML = `
-    <span class="slot-label">${slotTitle(slot).replace("Select ", "").toUpperCase()}</span>
-    ${item.image ? `<img class="slot-character-image" src="${item.image}" alt="${item.name}">` : `<span class="slot-icon">${item.icon || "✦"}</span>`}
-    <strong>${item.name}</strong>
-    <small>${item.element} · ${item.role}${item.timeTrait && item.timeTrait !== "—" ? ` · ${item.timeTrait}` : ""}</small>
-  `;
-}
-
-function summarize(values) {
-  const filtered = values.filter(Boolean);
-  if (!filtered.length) return "—";
-  const counts = filtered.reduce((acc, value) => {
-    acc[value] = (acc[value] || 0) + 1;
-    return acc;
-  }, {});
-  return Object.entries(counts).map(([k,v]) => v > 1 ? `${k} ×${v}` : k).join(" · ");
-}
-
-function updateAnalysis() {
-  const members = Object.values(team).filter(Boolean);
-  document.getElementById("slotSummary").textContent = `${members.length} / 6`;
-  document.getElementById("elementSummary").textContent = summarize(members.map(x => x.element).filter(x => x && x !== "—"));
-  document.getElementById("roleSummary").textContent = summarize(members.map(x => x.role).filter(x => x && x !== "Monster"));
-  document.getElementById("timeSummary").textContent = summarize(members.map(x => x.timeTrait).filter(x => x && x !== "—"));
-
-  const note = document.getElementById("teamNote");
-  if (!members.length) {
-    note.textContent = "Select your team members to generate a formation summary.";
-    return;
-  }
-
-  const battleCount = [team.battle1, team.battle2].filter(Boolean).length;
-  const assistCount = [team.assist1, team.assist2].filter(Boolean).length;
-
-  if (members.length === 6) {
-    note.innerHTML = `<strong>Formation complete.</strong> Your team has 1 Main Character, ${battleCount} Battle Partners, ${assistCount} Assist Partners, and 1 Monster.`;
-  } else {
-    note.innerHTML = `<strong>${members.length} of 6 slots selected.</strong> Continue filling the remaining formation slots.`;
-  }
-}
-
-slots.forEach(slot => slot.addEventListener("click", () => openPicker(slot.dataset.slot)));
-closePicker.addEventListener("click", closeModal);
-backdrop.addEventListener("click", e => { if (e.target === backdrop) closeModal(); });
-clearTeam.addEventListener("click", () => {
-  team = { hero:null, battle1:null, battle2:null, assist1:null, assist2:null, monster:null };
-  location.reload();
-});
-
-updateAnalysis();
+const slots=document.querySelectorAll('.team-slot'),backdrop=document.getElementById('pickerBackdrop'),pickerGrid=document.getElementById('pickerGrid'),pickerTitle=document.getElementById('pickerTitle'),closePicker=document.getElementById('closePicker'),clearTeam=document.getElementById('clearTeam'),ownedRoster=document.getElementById('ownedRoster'),adventurerSelect=document.getElementById('adventurerSelect'),statusBox=document.getElementById('recommendationStatus');
+const menuBtn=document.getElementById('menuBtn'),navLinks=document.getElementById('navLinks');menuBtn.addEventListener('click',()=>navLinks.classList.toggle('open'));
+let activeSlot=null,mode='general',team={hero:null,battle1:null,battle2:null,assist1:null,assist2:null,monster:null};const STORAGE='beemoe-owned-roster-v2';let owned=new Set(JSON.parse(localStorage.getItem(STORAGE)||'[]'));
+const battle=gameData.characters.filter(x=>x.type==='battle'),assist=gameData.characters.filter(x=>x.type==='assist'),allOwnable=[...gameData.adventurers,...battle,...assist];
+function overview(x){return typeof characterOverviews!=='undefined'?characterOverviews[x.id]||{}:{}}function roles(x){const o=overview(x);return o.teamRoles||[]}function isBuffer(x){const o=overview(x);return Boolean(o.isBuffer||roles(x).includes('Buffer')||(/buff/i.test(o.playstyle||'')&&x.role==='Supporter'))}function isChainer(x){const o=overview(x);return Boolean(o.isChainer||roles(x).includes('Chainer')||/chain/i.test(o.coreMechanic||''))}function isSustain(x){const o=overview(x),text=`${o.playstyle||''} ${o.coreMechanic||''} ${roles(x).join(' ')}`;return /heal|recovery|sustain|shield|protection|defender/i.test(text)||x.role==='Defender'}function isDebuffer(x){return x.role==='Debuffer'||roles(x).includes('Debuffer')||/debuff|res shred|vulnerability/i.test(`${overview(x).playstyle||''} ${overview(x).coreMechanic||''}`)}function isDps(x){return x.role==='Attacker'||roles(x).includes('DPS')}
+function saveOwned(){localStorage.setItem(STORAGE,JSON.stringify([...owned]));renderOwned();refreshAdventurers()}function renderOwned(){const groups=[['Adventurers',gameData.adventurers],['Battle Partners',battle],['Assist Partners',assist]];ownedRoster.innerHTML=groups.map(([title,items])=>`<div class="owned-group"><h3>${title}</h3><div class="owned-grid">${items.map(x=>`<label class="owned-card"><input type="checkbox" data-owned="${x.id}" ${owned.has(x.id)?'checked':''}><span>${x.image?`<img src="${x.image}" alt="${x.name}">`:x.icon||'✦'}</span><span><strong>${x.name}</strong><small>${x.element} · ${x.role}</small></span></label>`).join('')}</div></div>`).join('');ownedRoster.querySelectorAll('[data-owned]').forEach(c=>c.addEventListener('change',()=>{c.checked?owned.add(c.dataset.owned):owned.delete(c.dataset.owned);saveOwned()}))}function refreshAdventurers(){const current=adventurerSelect.value,items=gameData.adventurers.filter(x=>owned.has(x.id));adventurerSelect.innerHTML='<option value="">Select an owned Adventurer</option>'+items.map(x=>`<option value="${x.id}">${x.name} · ${x.element} · ${x.role}</option>`).join('');if(items.some(x=>x.id===current))adventurerSelect.value=current}
+function scoreUnit(x,hero,needs){let s=0;const o=overview(x);if(x.element===hero.element)s+=mode==='boss'?14:18;if(x.timeTrait&&x.timeTrait===hero.timeTrait)s+=4;if(isBuffer(x))s+=needs.buffer?34:10;if(isChainer(x))s+=needs.chainer?34:12;if(isSustain(x))s+=mode==='survival'?25:10;if(isDps(x))s+=mode==='boss'?20:12;if(isDebuffer(x))s+=mode==='boss'?18:10;if(hero.role==='Attacker'&&isSustain(x))s+=8;if(hero.role==='Defender'&&isDps(x))s+=8;if(hero.role==='Supporter'&&isDps(x))s+=10;if(/fire/i.test(o.bestFor||'')&&hero.element==='Fire')s+=5;if(/earth/i.test(o.bestFor||'')&&hero.element==='Earth')s+=5;if(/light/i.test(o.bestFor||'')&&hero.element==='Light')s+=5;if(/water/i.test(o.bestFor||'')&&hero.element==='Water')s+=5;if(/wind/i.test(o.bestFor||'')&&hero.element==='Wind')s+=5;return s}
+function chooseBest(pool,count,hero,selected){const result=[];for(let i=0;i<count;i++){const current=[hero,...selected,...result];const needs={buffer:!current.some(isBuffer),chainer:!current.some(isChainer)};const candidates=pool.filter(x=>!result.includes(x)).sort((a,b)=>scoreUnit(b,hero,needs)-scoreUnit(a,hero,needs));if(candidates[0])result.push(candidates[0])}return result}
+function recommend(){const hero=gameData.adventurers.find(x=>x.id===adventurerSelect.value);if(!hero){statusBox.className='recommendation-status warn';statusBox.textContent='Choose an owned Adventurer first.';return}const ownedBattle=battle.filter(x=>owned.has(x.id)),ownedAssist=assist.filter(x=>owned.has(x.id));if(ownedBattle.length<2||ownedAssist.length<2){statusBox.className='recommendation-status warn';statusBox.textContent=`You need at least 2 owned Battle Partners and 2 owned Assist Partners. Currently selected: ${ownedBattle.length} Battle / ${ownedAssist.length} Assist.`;return}let picks=chooseBest(ownedBattle,2,hero,[]);picks.push(...chooseBest(ownedAssist,2,hero,picks));const core=[hero,...picks];if(!core.some(isBuffer)){const candidate=ownedAssist.filter(x=>isBuffer(x)&&!picks.includes(x)).sort((a,b)=>scoreUnit(b,hero,{buffer:true,chainer:false})-scoreUnit(a,hero,{buffer:true,chainer:false}))[0];if(candidate)picks[3]=candidate}if(![hero,...picks].some(isChainer)){const candidates=[...ownedBattle,...ownedAssist].filter(x=>isChainer(x)&&!picks.includes(x)).sort((a,b)=>scoreUnit(b,hero,{buffer:false,chainer:true})-scoreUnit(a,hero,{buffer:false,chainer:true}));const c=candidates[0];if(c){if(c.type==='battle')picks[1]=c;else picks[3]=c}}
+team.hero=hero;team.battle1=picks.filter(x=>x.type==='battle')[0]||null;team.battle2=picks.filter(x=>x.type==='battle')[1]||null;team.assist1=picks.filter(x=>x.type==='assist')[0]||null;team.assist2=picks.filter(x=>x.type==='assist')[1]||null;['hero','battle1','battle2','assist1','assist2'].forEach(k=>team[k]&&updateSlot(k,team[k],true));updateAnalysis();const final=[team.hero,team.battle1,team.battle2,team.assist1,team.assist2].filter(Boolean),missing=[];if(!final.some(isBuffer))missing.push('Buffer');if(!final.some(isChainer))missing.push('Chainer');statusBox.className=`recommendation-status ${missing.length?'warn':'good'}`;statusBox.innerHTML=missing.length?`Best team from your roster generated, but your selected roster cannot currently satisfy: <strong>${missing.join(' + ')}</strong>.`:`<strong>Recommended core generated.</strong> Your owned roster satisfies both Buffer and Chainer coverage.`}
+function choicesForSlot(slot){if(slot==='hero')return gameData.adventurers.filter(x=>owned.has(x.id));if(slot.startsWith('battle'))return battle.filter(x=>owned.has(x.id));if(slot.startsWith('assist'))return assist.filter(x=>owned.has(x.id));return []}function slotTitle(slot){if(slot==='hero')return'Select Main Character';if(slot.startsWith('battle'))return'Select Battle Partner';if(slot.startsWith('assist'))return'Select Assist Partner';return'Select Monster'}function openPicker(slot){if(slot==='monster')return;activeSlot=slot;pickerTitle.textContent=slotTitle(slot);const choices=choicesForSlot(slot);pickerGrid.innerHTML=choices.length?choices.map(item=>`<button class="picker-card" data-id="${item.id}"><div class="picker-icon">${item.image?`<img src="${item.image}" alt="${item.name}">`:item.icon||'✦'}</div><div><strong>${item.name}</strong><small>${item.type==='adventurer'?'Adventurer Class':item.partnerType}</small><div class="picker-tags"><span>${item.element}</span><span>${item.role}</span><span>${item.timeTrait}</span></div></div></button>`).join(''):'<p>No owned characters available for this slot. Add them in Step 1.</p>';pickerGrid.querySelectorAll('.picker-card').forEach(card=>card.addEventListener('click',()=>{const selected=choices.find(x=>x.id===card.dataset.id);team[activeSlot]=selected;updateSlot(activeSlot,selected);if(activeSlot==='hero')adventurerSelect.value=selected.id;closeModal();updateAnalysis()}));backdrop.hidden=false;document.body.classList.add('modal-open')}function closeModal(){backdrop.hidden=true;document.body.classList.remove('modal-open')}function updateSlot(slot,item,recommended=false){const el=document.querySelector(`[data-slot="${slot}"]`);el.classList.add('filled');el.classList.toggle('recommended',recommended);el.innerHTML=`<span class="slot-label">${slotTitle(slot).replace('Select ','').toUpperCase()}</span>${item.image?`<img class="slot-character-image" src="${item.image}" alt="${item.name}">`:`<span class="slot-icon">${item.icon||'✦'}</span>`}<strong>${item.name}</strong><small>${item.element} · ${item.role}${item.timeTrait?` · ${item.timeTrait}`:''}</small>`}
+function summarize(values){const c=values.filter(Boolean).reduce((a,v)=>(a[v]=(a[v]||0)+1,a),{});return Object.keys(c).length?Object.entries(c).map(([k,v])=>v>1?`${k} ×${v}`:k).join(' · '):'—'}function updateAnalysis(){const core=[team.hero,team.battle1,team.battle2,team.assist1,team.assist2].filter(Boolean);document.getElementById('slotSummary').textContent=`${core.length} / 5`;document.getElementById('elementSummary').textContent=summarize(core.map(x=>x.element));document.getElementById('roleSummary').textContent=summarize(core.map(x=>x.role));document.getElementById('timeSummary').textContent=summarize(core.map(x=>x.timeTrait));const checks=[['Buffer',core.some(isBuffer),'Improves allied performance'],['Chainer',core.some(isChainer),'Supports Chain Count / Chain Mastery'],['Damage',core.some(isDps),'Dedicated damage source'],['Sustain',core.some(isSustain),'Healing, Shielding or tanking']];document.getElementById('teamChecks').innerHTML=checks.map(([n,ok,d])=>`<div class="check-card ${ok?'ok':'missing'}"><strong>${ok?'✓':'!'} ${n}</strong><span>${d}</span></div>`).join('');const why=document.getElementById('whyTeam');if(!core.length){why.textContent='Choose your roster and generate a recommendation to see the synergy explanation.';return}why.innerHTML=`<strong>Team reasoning</strong><ul>${core.map(x=>{const tags=[];if(isBuffer(x))tags.push('Buffer');if(isChainer(x))tags.push('Chainer');if(isDps(x))tags.push('DPS');if(isSustain(x))tags.push('Sustain');if(isDebuffer(x))tags.push('Debuffer');if(x!==team.hero&&team.hero&&x.element===team.hero.element)tags.push(`${x.element} synergy`);return `<li><strong>${x.name}</strong> — ${tags.length?tags.join(', '):x.role}</li>`}).join('')}</ul>`}
+slots.forEach(s=>s.addEventListener('click',()=>openPicker(s.dataset.slot)));closePicker.addEventListener('click',closeModal);backdrop.addEventListener('click',e=>{if(e.target===backdrop)closeModal()});document.getElementById('selectAllOwned').addEventListener('click',()=>{allOwnable.forEach(x=>owned.add(x.id));saveOwned()});document.getElementById('clearOwned').addEventListener('click',()=>{owned.clear();saveOwned()});document.getElementById('recommendTeam').addEventListener('click',recommend);document.querySelectorAll('.mode-btn').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.mode-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode}));clearTeam.addEventListener('click',()=>location.reload());renderOwned();refreshAdventurers();updateAnalysis();
