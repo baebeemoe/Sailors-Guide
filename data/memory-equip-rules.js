@@ -1,27 +1,31 @@
-// Memory equipment compatibility metadata.
-// IMPORTANT: Only add a Memory ID here after its partner-type restriction is verified.
-// Values: "assist", "battle", "adventurer", or "all".
-// Unlisted Memories remain "unverified" and are not assumed to be universally compatible.
-const memoryEquipRules = {
-};
-
-function memoryEquipType(piece) {
-  if (!piece) return "unverified";
-  return memoryEquipRules[piece.id] || "unverified";
+// Memory recommendation compatibility derived from the Memory's verified skill descriptions.
+// Role remains the hard equipment rule. Partner-type affinity is inferred from what can actually trigger the Memory effect.
+function characterCanUseAssistSkill(character) {
+  return Boolean(character && character.partnerType === "Assist Partner");
 }
 
-function characterEquipType(character) {
-  if (!character) return "unknown";
-  if (character.type === "adventurer") return "adventurer";
-  if (character.partnerType === "Assist Partner") return "assist";
-  if (character.partnerType === "Battle Partner") return "battle";
-  return "unknown";
+function memoryUsageProfile(piece) {
+  if (!piece || !piece.normal) return { baseAssistOnly:false, limitBreakAssistOnly:false };
+  const base = String(piece.normal.effectText || "").toLowerCase();
+  const limitBreak = String(piece.normal.breakText || "").toLowerCase();
+  return {
+    // If the normal/core Memory effect specifically requires an Assist Skill, its meaningful use is Assist Partner-focused.
+    baseAssistOnly: base.includes("when using an assist skill"),
+    // A Memory can still be strong at base for Battle Partners even if only its 3-copy Limit Break effect requires an Assist Skill.
+    limitBreakAssistOnly: limitBreak.includes("when using an assist skill")
+  };
 }
 
 function isMemoryPartnerCompatible(piece, character) {
-  const memoryType = memoryEquipType(piece);
-  const characterType = characterEquipType(character);
-  if (memoryType === "all") return true;
-  if (memoryType === "unverified") return false;
-  return memoryType === characterType;
+  const profile = memoryUsageProfile(piece);
+  if (profile.baseAssistOnly && !characterCanUseAssistSkill(character)) return false;
+  return true;
+}
+
+function memoryPartnerNote(piece, character) {
+  const profile = memoryUsageProfile(piece);
+  if (profile.baseAssistOnly) return "Assist-focused: its normal Memory effect activates when using an Assist Skill.";
+  if (profile.limitBreakAssistOnly && !characterCanUseAssistSkill(character)) return "Its base effects work here, but the 3-copy Limit Break effect requires an Assist Skill and does not add value to this character.";
+  if (profile.limitBreakAssistOnly) return "Assist synergy: its 3-copy Limit Break effect also activates from an Assist Skill.";
+  return "Compatibility is based on the Memory's role and the triggers described in its skills.";
 }
