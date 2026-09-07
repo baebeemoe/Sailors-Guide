@@ -56,5 +56,40 @@ const memoryRecommendations = {
     { id:"knight-of-light", rating:5, label:"Best Fit", reason:"Ethan is an Attacker who creates Shields with his own kit. Knight of Light is role-valid and combines offensive scaling with Shield-related synergy." },
     { id:"fading-memories", rating:4, label:"Light Option", reason:"Ethan uses damaging Active Skills and is Light-aligned, allowing this Attacker Memory's Active Skill and Light DMG effects to reinforce his offense." },
     { id:"bonus-leave", rating:3, label:"Accessible", reason:"A reliable Attacker Memory that provides general ATK scaling for Ethan's ATK-based damage." }
+  ],
+  "lucy-mayreel": [
+    { id:"fading-memories", rating:5, label:"Best Fit", reason:"Lucy is a Light Attacker with an Active-Skill-driven rotation. Fading Memories supplies Crit Rate, Active Skill DMG and stacking Light DMG that directly reinforce her offensive cycle." },
+    { id:"reason-to-live", rating:4, label:"Burst Option", reason:"Lucy has Assist-skill interactions and a special Ultimate state, making Reason to Live's Assist-triggered Light DMG and Ultimate DMG effects a strong burst alternative." },
+    { id:"knight-of-light", rating:3, label:"Crit Option", reason:"The ATK passive and Ultimate-triggered Crit Rate are useful for Lucy even when the Shield-specific portion is not consistently active." }
+  ],
+  kaira: [
+    { id:"red-hair", rating:5, label:"Best Fit", reason:"Kaira's kit repeatedly uses Recovery and scales it from ATK. Red Hair starts with an ATK increase and converts each Recovery into stacking Light DMG for the team." },
+    { id:"suikawari-bring-it", rating:4, label:"Team Crit Option", reason:"Kaira's Recovery reliably triggers the team Crit DMG buff while also building toward Chain Bonus, giving her strong offensive support value." },
+    { id:"reminiscence", rating:3, label:"Burst Support", reason:"Its ATK passive supports Kaira's ATK-based healing and its Ultimate trigger provides team Crit DMG for burst windows." }
+  ],
+  "nadia-sand": [
+    { id:"summer-nights-full-dream", rating:5, label:"Best Fit", reason:"Nadia is an HP-scaling Defender who applies Taunt. This Memory adds MAX HP, self-Recovery every ally turn and a direct interaction with taunted targets." },
+    { id:"bubble", rating:4, label:"Debuff Utility", reason:"Cocktail Temptation and Taunt make Nadia a frequent debuff applier, allowing Bubble to build RES and potentially restore SP to deployed allies while also increasing MAX HP." },
+    { id:"dad-role", rating:3, label:"Sustain Option", reason:"MAX HP supports Nadia's HP scaling and the recurring self-Recovery helps her remain healthy while functioning as a tank." }
+  ],
+  remi: [
+    { id:"guardian-of-light", rating:5, label:"Best Fit", reason:"Remi frequently grants Shields through Moley! Hold On! and Vein Jackpot, directly triggering Guardian of Light's Shield utility and Chain Bonus condition." },
+    { id:"legendary-ore", rating:4, label:"DEF Scaling", reason:"Remi's damage, Shield strength and Sturdy mechanic all value DEF. Legendary Ore adds DEF and further increases it after her Ultimate." },
+    { id:"the-159th-princess", rating:4, label:"Tank Option", reason:"Taking hits raises DEF, which strengthens Remi's DEF-scaled attacks and Shields while she occupies a defensive role." }
+  ],
+  rak: [
+    { id:"dad-role", rating:5, label:"Best Fit", reason:"Rak scales attacks from HP and intentionally takes hits through Taunt. MAX HP, self-Recovery and Heal Bonus Received all reinforce his Fiery Heart tank loop." },
+    { id:"summer-nights-full-dream", rating:4, label:"Taunt Sustain", reason:"Rak actively Taunts enemies and benefits heavily from MAX HP and repeated self-Recovery, making this a strong sustain-oriented Defender option." },
+    { id:"bubble", rating:3, label:"HP Utility", reason:"Bubble's MAX HP directly improves Rak's HP-scaled damage and Fiery Heart durability while adding team SP utility when he applies Taunt." }
+  ],
+  carat: [
+    { id:"carat-the-strongest-wind", rating:5, label:"Best Fit", reason:"Carat deals Additional DMG while Chill Diva is active, directly activating this Memory's ATK increase and matching her core damage loop." },
+    { id:"silver-ravens-leader", rating:4, label:"Crit Burst", reason:"Carat already gains Crit Rate from Chill Diva and her Passive. Extra Crit DMG plus the Active-Skill ATK buff gives her a strong general burst package." },
+    { id:"bonus-leave", rating:3, label:"Accessible", reason:"A reliable ATK increase after attacking improves both Carat's normal damage and the Additional DMG portions of her kit." }
+  ],
+  iron: [
+    { id:"summer-nights-full-dream", rating:5, label:"Best Fit", reason:"Iron is an HP-scaling Taunt Defender. MAX HP, automatic Recovery and the direct taunted-target interaction closely match his tanking and sustain mechanics." },
+    { id:"dad-role", rating:4, label:"Sustain Option", reason:"MAX HP strengthens Iron's HP-scaled attacks while repeated self-Recovery and Heal Bonus Received improve his durability." },
+    { id:"bubble", rating:3, label:"HP Utility", reason:"The MAX HP passive supports Iron's HP scaling, while his Taunt application can activate Bubble's debuff-triggered RES and team SP utility." }
   ]
 };
