@@ -43,6 +43,40 @@ function renderSkills() {
   return `${progression}<div class="skills-grid">${cards}</div>`;
 }
 
+function memoryById(memoryId) {
+  return typeof memoryPieces !== "undefined" ? memoryPieces.find(piece => piece.id === memoryId) : null;
+}
+
+function memoryImage(piece) {
+  if (!piece) return "";
+  if (piece.image) return piece.image;
+  return `assets/memory-pieces/${piece.id}.jpg`;
+}
+
+function renderMemoryRecommendations() {
+  const recs = typeof memoryRecommendations !== "undefined" ? memoryRecommendations[character.id] : null;
+  if (!recs || !recs.length) {
+    return `<div class="memory-empty"><strong>Recommendations coming soon</strong><p>We will add recommendations after this character's verified skill kit is available.</p></div>`;
+  }
+  const cards = recs.map(rec => {
+    const piece = memoryById(rec.id);
+    if (!piece) return "";
+    const stars = "★".repeat(rec.rating) + "☆".repeat(5 - rec.rating);
+    const image = memoryImage(piece);
+    return `<a class="memory-rec-card" href="memory-piece.html?id=${encodeURIComponent(piece.id)}">
+      <div class="memory-rec-art">${image ? `<img src="${image}" alt="${piece.name}">` : `<div class="memory-rec-placeholder">◇</div>`}<span class="memory-rec-rarity">${piece.rarity}</span></div>
+      <div class="memory-rec-copy">
+        <div class="memory-rec-label">${rec.label}</div>
+        <h3>${piece.name}</h3>
+        <div class="memory-rec-stars" aria-label="${rec.rating} out of 5 stars">${stars}</div>
+        <p>${rec.reason}</p>
+        <span class="memory-rec-role">${piece.role} Memory · View Details →</span>
+      </div>
+    </a>`;
+  }).join("");
+  return `<div class="memory-recommendation-grid">${cards}</div><div class="memory-method-note">Recommendations are based on direct kit synergy with the Memory Pieces currently documented in Beemoe's Guide. Ratings can be refined later as we add more characters, team interactions, MAX Growth data, gear and combat testing.</div>`;
+}
+
 document.title = `${character.name} | Beemoe's Guide`;
 
 page.innerHTML = `
@@ -89,7 +123,7 @@ page.innerHTML = `
 
     <section id="memory" class="detail-section">
       <p class="eyebrow">MEMORY PIECES</p><h2>Recommended Memory Pieces</h2>
-      <div class="gear-grid"><div class="gear-card"><small>BEST IN SLOT</small><div class="gear-icon">◇</div><h3>To be added</h3></div><div class="gear-card"><small>ALTERNATIVE</small><div class="gear-icon">◇</div><h3>To be added</h3></div><div class="gear-card"><small>F2P / ACCESSIBLE</small><div class="gear-icon">◇</div><h3>To be added</h3></div></div>
+      ${renderMemoryRecommendations()}
     </section>
 
     <section id="gear" class="detail-section"><p class="eyebrow">LOADOUT</p><h2>Recommended Gear</h2><div class="placeholder-block"><span>Gear recommendation placeholder</span><p>Add best sets, main stats, substat priority, and alternatives.</p></div></section>
