@@ -10,6 +10,39 @@ function labelType(item) {
   return item.type === "adventurer" ? "Adventurer Class" : item.partnerType;
 }
 
+function renderSkillCard(skill, key) {
+  const unlock = skill.unlockStars ? `<span class="skill-unlock">Unlocks at ${skill.unlockStars}★</span>` : "";
+  const sp = skill.sp ? `<span class="skill-sp">SP ${skill.sp}</span>` : "";
+  const limit = skill.usageLimit ? `<span class="skill-limit">${skill.usageLimit} uses per battle</span>` : "";
+  const tags = (skill.tags || []).map(tag => `<span>${tag}</span>`).join("");
+  const special = key === "ultimate" ? " ultimate" : (key === "trait" || key === "passive" ? " passive" : key === "break" ? " break" : "");
+  return `
+    <article class="skill-card${special}">
+      <div class="skill-card-head">
+        <div>
+          <p class="skill-kind">${skill.type}</p>
+          <h3>${skill.name}</h3>
+        </div>
+        <div class="skill-meta"><span>Lv.${skill.level}</span>${sp}${unlock}${limit}</div>
+      </div>
+      <p class="skill-description">${skill.text}</p>
+      ${tags ? `<div class="skill-tags">${tags}</div>` : ""}
+    </article>`;
+}
+
+function renderSkills() {
+  const data = typeof characterSkills !== "undefined" ? characterSkills[character.id] : null;
+  if (!data) {
+    return `<div class="skills-empty"><strong>Skills coming soon</strong><p>This character's verified skill data has not been added yet.</p></div>`;
+  }
+  const order = ["basic","skill1","skill2","ultimate","break","trait","passive"];
+  const cards = order.filter(key => data[key]).map(key => renderSkillCard(data[key], key)).join("");
+  const progression = character.type === "adventurer"
+    ? `<div class="skill-note"><strong>Adventurer note</strong><span>Adventurers can have a unique Break Skill. Trait unlocks at 3★ and Passive at 5★ when available.</span></div>`
+    : `<div class="skill-note"><strong>Star progression</strong><span>Trait unlocks at 3★. Passive unlocks at 5★. Missing entries are left unlisted until verified.</span></div>`;
+  return `${progression}<div class="skills-grid">${cards}</div>`;
+}
+
 document.title = `${character.name} | Beemoe's Guide`;
 
 page.innerHTML = `
@@ -24,110 +57,69 @@ page.innerHTML = `
       <div>
         <p class="eyebrow">${labelType(character).toUpperCase()}</p>
         <h1>${character.name}</h1>
-        <p class="tagline">
-          ${character.type === "adventurer"
-            ? "Main Character class entry."
-            : `${character.partnerType} character entry.`}
-        </p>
-
+        <p class="tagline">${character.type === "adventurer" ? "Main Character class entry." : `${character.partnerType} character entry.`}</p>
         <div class="hero-tags">
           <span class="element ${character.element.toLowerCase()}">${character.element}</span>
-          <span>${character.role}</span>
-          <span>${character.timeTrait}</span>
+          <span>${character.role}</span><span>${character.timeTrait}</span>
           ${character.tier ? `<span>Tier ${character.tier}</span>` : ""}
         </div>
       </div>
     </div>
   </section>
 
-  <div class="tab-shell">
-    <div class="wrap tabs">
-      <a class="active" href="#overview">Overview</a>
-      <a href="#skills">Skills</a>
-      <a href="#memory">Memory Pieces</a>
-      <a href="#gear">Recommended Gear</a>
-      <a href="#teams">Recommended Team</a>
-      <a href="#showcase">Showcase</a>
-    </div>
-  </div>
+  <div class="tab-shell"><div class="wrap tabs">
+    <a class="active" href="#overview">Overview</a><a href="#skills">Skills</a><a href="#memory">Memory Pieces</a><a href="#gear">Recommended Gear</a><a href="#teams">Recommended Team</a><a href="#showcase">Showcase</a>
+  </div></div>
 
   <div class="wrap detail-content">
     <section id="overview" class="detail-section">
-      <p class="eyebrow">OVERVIEW</p>
-      <h2>${character.name} Overview</h2>
+      <p class="eyebrow">OVERVIEW</p><h2>${character.name} Overview</h2>
       <div class="overview-grid">
         <div class="overview-panel"><span>Character Type</span><strong>${labelType(character)}</strong></div>
         <div class="overview-panel"><span>Element</span><strong>${character.element}</strong></div>
         <div class="overview-panel"><span>Role</span><strong>${character.role}</strong></div>
         <div class="overview-panel"><span>Time Trait</span><strong>${character.timeTrait}</strong></div>
       </div>
-      <p class="lead content-placeholder">Detailed character overview, strengths, weaknesses, investment recommendation, and beginner notes can be added here once the character's full gameplay data is available.</p>
+      <p class="lead content-placeholder">Detailed strengths, weaknesses, investment recommendations, and beginner notes will be expanded as more verified gameplay data is added.</p>
     </section>
 
-    <section id="skills" class="detail-section">
-      <p class="eyebrow">ABILITIES</p><h2>Skills</h2>
-      <div class="placeholder-block"><span>Skill data placeholder</span><p>Add skill names, icons, effects, upgrade priority, and rotation recommendations here.</p></div>
+    <section id="skills" class="detail-section skills-section">
+      <p class="eyebrow">ABILITIES</p><h2>${character.name} Skills</h2>${renderSkills()}
     </section>
 
     <section id="memory" class="detail-section">
       <p class="eyebrow">MEMORY PIECES</p><h2>Recommended Memory Pieces</h2>
-      <div class="gear-grid">
-        <div class="gear-card"><small>BEST IN SLOT</small><div class="gear-icon">◇</div><h3>To be added</h3></div>
-        <div class="gear-card"><small>ALTERNATIVE</small><div class="gear-icon">◇</div><h3>To be added</h3></div>
-        <div class="gear-card"><small>F2P / ACCESSIBLE</small><div class="gear-icon">◇</div><h3>To be added</h3></div>
-      </div>
+      <div class="gear-grid"><div class="gear-card"><small>BEST IN SLOT</small><div class="gear-icon">◇</div><h3>To be added</h3></div><div class="gear-card"><small>ALTERNATIVE</small><div class="gear-icon">◇</div><h3>To be added</h3></div><div class="gear-card"><small>F2P / ACCESSIBLE</small><div class="gear-icon">◇</div><h3>To be added</h3></div></div>
     </section>
 
-    <section id="gear" class="detail-section">
-      <p class="eyebrow">LOADOUT</p><h2>Recommended Gear</h2>
-      <div class="placeholder-block"><span>Gear recommendation placeholder</span><p>Add best sets, main stats, substat priority, and alternatives.</p></div>
-    </section>
-
-    <section id="teams" class="detail-section">
-      <p class="eyebrow">SYNERGY</p><h2>Recommended Team</h2>
-      <div class="placeholder-block"><span>Team recommendation placeholder</span><p>Recommended formations will use the full Main Character + Battle + Assist + Monster structure.</p><a class="mini-link" href="team-builder.html">Open Team Builder →</a></div>
-    </section>
-
-    <section id="showcase" class="detail-section">
-      <p class="eyebrow">GAMEPLAY</p><h2>Showcase</h2>
-      <div class="showcase"><div class="play">▶</div><h3>${character.name} Showcase</h3><p>Add a gameplay video, rotation demo, boss clear, or build showcase here.</p></div>
-    </section>
-  </div>
-`;
+    <section id="gear" class="detail-section"><p class="eyebrow">LOADOUT</p><h2>Recommended Gear</h2><div class="placeholder-block"><span>Gear recommendation placeholder</span><p>Add best sets, main stats, substat priority, and alternatives.</p></div></section>
+    <section id="teams" class="detail-section"><p class="eyebrow">SYNERGY</p><h2>Recommended Team</h2><div class="placeholder-block"><span>Team recommendation placeholder</span><p>Recommended formations will use the full Main Character + Battle + Assist + Monster structure.</p><a class="mini-link" href="team-builder.html">Open Team Builder →</a></div></section>
+    <section id="showcase" class="detail-section"><p class="eyebrow">GAMEPLAY</p><h2>Showcase</h2><div class="showcase"><div class="play">▶</div><h3>${character.name} Showcase</h3><p>Add a gameplay video, rotation demo, boss clear, or build showcase here.</p></div></section>
+  </div>`;
 
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 menuBtn.addEventListener("click", () => navLinks.classList.toggle("open"));
 
-// Keep the compact sticky section navigation in sync with the section being viewed.
 const sectionTabs = [...document.querySelectorAll("#characterPage .tabs a")];
 const detailSections = [...document.querySelectorAll("#characterPage .detail-section")];
-
 function setActiveTab(sectionId) {
   sectionTabs.forEach(tab => {
     const active = tab.getAttribute("href") === `#${sectionId}`;
     tab.classList.toggle("active", active);
-    if (active) tab.setAttribute("aria-current", "location");
-    else tab.removeAttribute("aria-current");
+    if (active) tab.setAttribute("aria-current", "location"); else tab.removeAttribute("aria-current");
   });
 }
-
 sectionTabs.forEach(tab => {
   tab.addEventListener("click", event => {
     const target = document.querySelector(tab.getAttribute("href"));
     if (!target) return;
-    event.preventDefault();
-    target.scrollIntoView({ behavior: "smooth", block: "start" });
-    history.replaceState(null, "", tab.getAttribute("href"));
-    setActiveTab(target.id);
+    event.preventDefault(); target.scrollIntoView({behavior:"smooth",block:"start"});
+    history.replaceState(null,"",tab.getAttribute("href")); setActiveTab(target.id);
   });
 });
-
 const sectionObserver = new IntersectionObserver(entries => {
-  const visible = entries
-    .filter(entry => entry.isIntersecting)
-    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  const visible = entries.filter(entry => entry.isIntersecting).sort((a,b) => b.intersectionRatio-a.intersectionRatio)[0];
   if (visible) setActiveTab(visible.target.id);
-}, { rootMargin: "-18% 0px -62% 0px", threshold: [0, .1, .25, .5] });
-
+},{rootMargin:"-18% 0px -62% 0px",threshold:[0,.1,.25,.5]});
 detailSections.forEach(section => sectionObserver.observe(section));
