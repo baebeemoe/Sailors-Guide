@@ -42,7 +42,7 @@ page.innerHTML = `
 
   <div class="tab-shell">
     <div class="wrap tabs">
-      <a href="#overview">Overview</a>
+      <a class="active" href="#overview">Overview</a>
       <a href="#skills">Skills</a>
       <a href="#memory">Memory Pieces</a>
       <a href="#gear">Recommended Gear</a>
@@ -98,3 +98,36 @@ page.innerHTML = `
 const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 menuBtn.addEventListener("click", () => navLinks.classList.toggle("open"));
+
+// Keep the compact sticky section navigation in sync with the section being viewed.
+const sectionTabs = [...document.querySelectorAll("#characterPage .tabs a")];
+const detailSections = [...document.querySelectorAll("#characterPage .detail-section")];
+
+function setActiveTab(sectionId) {
+  sectionTabs.forEach(tab => {
+    const active = tab.getAttribute("href") === `#${sectionId}`;
+    tab.classList.toggle("active", active);
+    if (active) tab.setAttribute("aria-current", "location");
+    else tab.removeAttribute("aria-current");
+  });
+}
+
+sectionTabs.forEach(tab => {
+  tab.addEventListener("click", event => {
+    const target = document.querySelector(tab.getAttribute("href"));
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+    history.replaceState(null, "", tab.getAttribute("href"));
+    setActiveTab(target.id);
+  });
+});
+
+const sectionObserver = new IntersectionObserver(entries => {
+  const visible = entries
+    .filter(entry => entry.isIntersecting)
+    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (visible) setActiveTab(visible.target.id);
+}, { rootMargin: "-18% 0px -62% 0px", threshold: [0, .1, .25, .5] });
+
+detailSections.forEach(section => sectionObserver.observe(section));
