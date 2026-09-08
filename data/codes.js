@@ -1,56 +1,24 @@
 // Star Sailors redeem codes database.
-// expiration uses YYYY-MM-DD when confirmed. Use null when the source does not specify an expiry.
-// Display times shown in source screenshots are UTC+7.
-// Duplicate screenshots are stored only once.
+// Active status is based on the latest community verification supplied by Zeno#1151.
+// Unknown reward/expiry fields are intentionally left unconfirmed rather than guessed.
 const redeemCodes = [
-  {
-    title: "BrowKnee promo code",
-    code: "AFQKVCFX",
-    reward: "Bulging Mushroom x3",
-    start: "2026-07-15",
-    expiration: null,
-    source: "YouTube"
-  },
-  {
-    title: "Mas Doel promo code",
-    code: "EWM6SMDU",
-    reward: "Bulging Mushroom x3",
-    start: "2026-07-16",
-    expiration: null,
-    source: "Discord"
-  },
-  {
-    title: "Hoshimiya promo code",
-    code: "NEWACUCH",
-    reward: "Bulging Mushroom x3",
-    start: "2026-07-18",
-    expiration: null,
-    source: "YouTube"
-  },
-  {
-    title: "Shared by Ankor",
-    code: "EWR3Q6ZE",
-    reward: "Bulging Mushroom x3",
-    start: "2026-07-28",
-    expiration: null,
-    source: "Discord"
-  },
-  {
-    title: "Shared by Potato",
-    code: "PMEDMQCS",
-    reward: "Bulging Mushroom x3",
-    start: "2026-07-30",
-    expiration: null,
-    source: "Discord"
-  },
   {
     title: "Artifacts Part 1",
     code: "PDGIFTO817",
-    reward: "Bulging Mushroom x5",
+    reward: "Reward details not confirmed",
     start: "2026-08-17",
-    expiration: "2026-09-13",
-    expirationTime: "10:59 PM UTC+7",
-    source: "Discord"
+    expiration: null,
+    verifiedActive: true,
+    source: "Zeno#1151"
+  },
+  {
+    title: "Collab Stream Code",
+    code: "AUGUSTZOX",
+    reward: "Reward details not confirmed",
+    start: null,
+    expiration: null,
+    verifiedActive: true,
+    source: "Zeno#1151"
   },
   {
     title: "Collab Special Coupon",
@@ -59,7 +27,8 @@ const redeemCodes = [
     start: "2026-08-27",
     expiration: "2026-09-23",
     expirationTime: "10:59 PM UTC+7",
-    source: "Discord"
+    verifiedActive: true,
+    source: "Zeno#1151"
   },
   {
     title: "Special September Coupon",
@@ -69,7 +38,8 @@ const redeemCodes = [
     start: "2026-09-02",
     expiration: "2026-09-30",
     expirationTime: "10:59 PM UTC+7",
-    source: "Discord"
+    verifiedActive: true,
+    source: "Zeno#1151"
   },
   {
     title: "Shared by Tobenmato",
@@ -79,6 +49,52 @@ const redeemCodes = [
     start: "2026-09-04",
     expiration: "2026-09-11",
     expirationTime: "10:59 PM UTC+7",
-    source: null
+    verifiedActive: true,
+    source: "Zeno#1151"
+  },
+  {
+    title: "BrowKnee promo code",
+    code: "AFQKVCFX",
+    reward: "Bulging Mushroom x3",
+    start: "2026-07-15",
+    expiration: "2026-09-08",
+    verifiedActive: false,
+    source: "Archive"
+  },
+  {
+    title: "Mas Doel promo code",
+    code: "EWM6SMDU",
+    reward: "Bulging Mushroom x3",
+    start: "2026-07-16",
+    expiration: "2026-09-08",
+    verifiedActive: false,
+    source: "Archive"
+  },
+  {
+    title: "Hoshimiya promo code",
+    code: "NEWACUCH",
+    reward: "Bulging Mushroom x3",
+    start: "2026-07-18",
+    expiration: "2026-09-08",
+    verifiedActive: false,
+    source: "Archive"
+  },
+  {
+    title: "Shared by Ankor",
+    code: "EWR3Q6ZE",
+    reward: "Bulging Mushroom x3",
+    start: "2026-07-28",
+    expiration: "2026-09-08",
+    verifiedActive: false,
+    source: "Archive"
+  },
+  {
+    title: "Shared by Potato",
+    code: "PMEDMQCS",
+    reward: "Bulging Mushroom x3",
+    start: "2026-07-30",
+    expiration: "2026-09-08",
+    verifiedActive: false,
+    source: "Archive"
   }
 ];
