@@ -1,23 +1,7 @@
-// Hard containment fix for Team Builder picker artwork.
-// Uses CSS background thumbnails instead of <img> elements so large source art
-// can never escape the 58x58 picker frame.
-openPicker=function(slot){
-  if(slot==='monster')return;
-  activeSlot=slot;
-  pickerTitle.textContent=slotTitle(slot);
-  const choices=choicesForSlot(slot);
-  pickerGrid.innerHTML=choices.length?choices.map(x=>{
-    const r=rank(x),grades=topRoles(x,2).slice(0,3).map(k=>`${ROLE_NAMES[k]} ${roleTier(r[k])}`).join(' · ');
-    const art=x.image?`<div class="picker-icon picker-thumb" style="--picker-art:url(&quot;${x.image}&quot;)" role="img" aria-label="${x.name}"></div>`:`<div class="picker-icon">${x.icon||'✦'}</div>`;
-    return `<button class="picker-card" data-id="${x.id}">${art}<div class="picker-copy"><strong>${x.name}</strong><small>${x.type==='adventurer'?'Adventurer Class':x.partnerType}${r.verified?'':' · Provisional'}</small><div class="picker-tags"><span>${x.element}</span><span>${grades||x.role}</span></div></div></button>`;
-  }).join(''):'<p>No owned characters available for this slot. Add them in Step 1.</p>';
-  pickerGrid.querySelectorAll('.picker-card').forEach(card=>card.addEventListener('click',()=>{
-    const selected=choices.find(x=>x.id===card.dataset.id);
-    team[activeSlot]=selected;
-    updateSlot(activeSlot,selected);
-    if(activeSlot==='hero')adventurerSelect.value=selected.id;
-    closeModal();updateAnalysis();
-  }));
-  backdrop.hidden=false;
-  document.body.classList.add('modal-open');
-};
+// Team Builder picker v2: rarity-grouped, role-focused, contained artwork.
+function pickerRarityRank(x){return ({SSR:0,SR:1,R:2,N:3})[x.rarity]??99}
+function pickerSorted(choices){return [...choices].sort((a,b)=>pickerRarityRank(a)-pickerRarityRank(b)||allOwnable.indexOf(a)-allOwnable.indexOf(b))}
+function pickerRoleRows(x){const r=rank(x);return Object.keys(ROLE_NAMES).filter(k=>r[k]>=3).sort((a,b)=>r[b]-r[a]).slice(0,3).map((k,i)=>`<div class="picker-role-row ${i===0?'primary':''}"><span>${ROLE_NAMES[k]}</span><strong>${roleTier(r[k])}</strong></div>`).join('')}
+function pickerCard(x){const r=rank(x),art=x.image?`<div class="picker-icon picker-thumb" style="--picker-art:url(&quot;${x.image}&quot;)" role="img" aria-label="${x.name}"></div>`:`<div class="picker-icon">${x.icon||'✦'}</div>`;const rarity=x.type==='adventurer'?'':`<span class="picker-rarity rarity-${String(x.rarity).toLowerCase()}">${x.rarity}</span>`;return `<button class="picker-card picker-card-v2" data-id="${x.id}">${art}<div class="picker-copy"><div class="picker-name-line"><strong>${x.name}</strong>${rarity}</div><small>${x.element} · ${x.role}${r.verified?'':' · Provisional'}</small><div class="picker-role-list">${pickerRoleRows(x)||`<div class="picker-role-row primary"><span>${x.role}</span><strong>—</strong></div>`}</div></div></button>`}
+openPicker=function(slot){if(slot==='monster')return;activeSlot=slot;pickerTitle.textContent=slotTitle(slot);const choices=pickerSorted(choicesForSlot(slot));if(!choices.length){pickerGrid.innerHTML='<p>No owned characters available for this slot. Add them in Step 1.</p>'}else if(slot==='hero'){pickerGrid.innerHTML=choices.map(pickerCard).join('')}else{const groups=['SSR','SR'];pickerGrid.innerHTML=groups.map(rarity=>{const units=choices.filter(x=>x.rarity===rarity);return units.length?`<section class="picker-rarity-section"><div class="picker-rarity-heading rarity-${rarity.toLowerCase()}"><span>${rarity}</span><strong>${rarity} ${slot.startsWith('battle')?'BATTLE PARTNERS':'ASSIST PARTNERS'}</strong></div><div class="picker-rarity-grid">${units.map(pickerCard).join('')}</div></section>`:''}).join('')}
+pickerGrid.querySelectorAll('.picker-card').forEach(card=>card.addEventListener('click',()=>{const selected=choices.find(x=>x.id===card.dataset.id);team[activeSlot]=selected;updateSlot(activeSlot,selected);if(activeSlot==='hero')adventurerSelect.value=selected.id;closeModal();updateAnalysis()}));backdrop.hidden=false;document.body.classList.add('modal-open')};
