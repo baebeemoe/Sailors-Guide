@@ -1,4 +1,4 @@
-// Render verified special skills that sit outside the standard Basic/Skill1/Skill2/Ultimate/Trait/Passive slots.
+// Render verified special skills and mechanic definitions that sit outside the standard skill slots.
 (function(){
   const params=new URLSearchParams(location.search);
   const id=params.get("id");
@@ -11,5 +11,9 @@
     const tags=(skill.tags||[]).map(tag=>`<span>${tag}</span>`).join("");
     const sp=skill.sp?`<span class="skill-sp">SP ${skill.sp}</span>`:"";
     grid.insertAdjacentHTML("beforeend",`<article class="skill-card"><div class="skill-card-head"><div><p class="skill-kind">${skill.type}</p><h3>${skill.name}</h3></div><div class="skill-meta"><span>Lv.${skill.level}</span>${sp}</div></div><p class="skill-description">${skill.text}</p>${tags?`<div class="skill-tags">${tags}</div>`:""}</article>`);
+  });
+  const mechanics=typeof characterMechanics!=="undefined"?(characterMechanics[id]||[]):[];
+  mechanics.forEach(mechanic=>{
+    grid.insertAdjacentHTML("beforeend",`<article class="skill-card mechanic-card"><div class="skill-card-head"><div><p class="skill-kind">Mechanic</p><h3>${mechanic.name}</h3></div></div><p class="skill-description">${mechanic.text}</p></article>`);
   });
 })();
