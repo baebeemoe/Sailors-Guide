@@ -1,0 +1,20 @@
+/* Compact roster layout: show more characters per screen without changing character detail pages. */
+.character-grid{gap:12px!important}
+.character-card{border-radius:13px!important}
+.character-card:hover{transform:translateY(-3px)!important}
+.character-card .portrait{height:178px!important}
+.character-card .portrait-icon{font-size:4.2rem!important}
+.character-card .card-body{padding:12px!important}
+.character-card .card-body h2{font-size:.96rem!important}
+.character-card .card-top p{font-size:.68rem!important}
+.character-card .rarity,.character-card .type-badge{top:8px!important;padding:4px 6px!important;font-size:.59rem!important}
+.character-card .rarity{left:8px!important}.character-card .type-badge{right:8px!important}
+.character-card .element,.character-card .attribute-row span{padding:4px 6px!important;font-size:.59rem!important}
+.character-card .attribute-row{gap:4px!important;margin-top:8px!important}
+.character-card .badges{padding-top:8px!important;margin-top:9px!important;font-size:.59rem!important}
+.character-grid{padding-bottom:52px!important}
+@media(min-width:1450px){.character-grid{grid-template-columns:repeat(5,minmax(0,1fr))!important}}
+@media(min-width:1101px) and (max-width:1449px){.character-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.character-card .portrait{height:165px!important}}
+@media(min-width:760px) and (max-width:1100px){.character-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}.character-card .portrait{height:155px!important}.character-card .badges{display:none}}
+@media(min-width:520px) and (max-width:759px){.character-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}.character-card .portrait{height:145px!important}.character-card .badges{display:none}}
+@media(max-width:519px){.character-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}.character-card .portrait{height:142px!important}.character-card .card-body{padding:9px!important}.character-card .card-body h2{font-size:.88rem!important}.character-card .badges{display:none}.character-card .attribute-row span{font-size:.54rem!important}}
