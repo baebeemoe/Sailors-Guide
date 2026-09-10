@@ -3,6 +3,14 @@ body>.wrap{
   padding-bottom:72px !important;
 }
 
+/* Standard page hero typography: bold without overwhelming the page. */
+html body .page-head h1,
+html body .gear-hero h1{
+  font-size:clamp(36px,4vw,56px) !important;
+  line-height:1.04 !important;
+  letter-spacing:-0.035em !important;
+}
+
 /* Shared visual footer ribbon.
    The anime theme previously forced this pseudo-footer back to margin-top:0.
    Use stronger specificity plus a visual offset so the footer is always
@@ -24,6 +32,14 @@ html body > main.wrap{
 .gear-page #sets .section-title>p:last-child,
 .gear-page #get .section-title>p:last-child{
   display:none !important;
+}
+
+@media (max-width:700px){
+  html body .page-head h1,
+  html body .gear-hero h1{
+    font-size:clamp(32px,10vw,42px) !important;
+    line-height:1.08 !important;
+  }
 }
 
 @media (min-width:1101px){
