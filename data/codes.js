@@ -3,6 +3,15 @@
 // Unknown reward/expiry fields are intentionally left unconfirmed rather than guessed.
 const redeemCodes = [
   {
+    title: "September Sailor Coupon",
+    code: "SAILOR09SEP",
+    reward: "Bulging Mushroom x3",
+    start: "2026-09-09",
+    expiration: "2026-09-30",
+    verifiedActive: true,
+    source: "Community"
+  },
+  {
     title: "Artifacts Part 1",
     code: "PDGIFTO817",
     reward: "Reward details not confirmed",
