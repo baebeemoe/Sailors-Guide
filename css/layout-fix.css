@@ -3,6 +3,12 @@ body>.wrap{
   padding-bottom:72px !important;
 }
 
+/* Monster and Gear pages need extra clearance above the bottom edge/build badge. */
+body>.wrap.gear-page,
+body:has(#monsterGrid)>.wrap{
+  padding-bottom:128px !important;
+}
+
 /* Hide internal/helper copy that does not need to be shown to guide visitors. */
 .gear-page #sets .section-title>p:last-child,
 .gear-page #get .section-title>p:last-child{
