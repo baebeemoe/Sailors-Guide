@@ -1,4 +1,14 @@
 /* Layout balance fix for the black glassmorphism theme */
+body>.wrap{
+  padding-bottom:72px !important;
+}
+
+/* Hide internal/helper copy that does not need to be shown to guide visitors. */
+.gear-page #sets .section-title>p:last-child,
+.gear-page #get .section-title>p:last-child{
+  display:none !important;
+}
+
 @media (min-width:1101px){
   body>.wrap{
     width:auto !important;
