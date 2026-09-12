@@ -1,7 +1,18 @@
 // Star Sailors redeem codes database.
-// Active status is based on the latest community verification supplied by Zeno#1151.
+// Active status is based on the latest community verification supplied by Zeno#1151 and official coupon notices provided to the guide.
 // Unknown reward/expiry fields are intentionally left unconfirmed rather than guessed.
 const redeemCodes = [
+  {
+    title: "September Adventure Gift",
+    code: "DIAMUSH09",
+    reward: "Bulging Mushroom x2 + Diamonds x200",
+    diamonds: 200,
+    start: "2026-09-12",
+    expiration: "2026-09-30",
+    expirationTime: "02:59 PM UTC",
+    verifiedActive: true,
+    source: "Official Coupon Notice"
+  },
   {
     title: "September Sailor Coupon",
     code: "SAILOR09SEP",
@@ -58,7 +69,7 @@ const redeemCodes = [
     start: "2026-09-04",
     expiration: "2026-09-11",
     expirationTime: "10:59 PM UTC+7",
-    verifiedActive: true,
+    verifiedActive: false,
     source: "Zeno#1151"
   },
   {
